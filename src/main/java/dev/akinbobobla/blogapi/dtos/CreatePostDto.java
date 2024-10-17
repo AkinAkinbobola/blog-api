@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
-public record BlogDto(
+public record CreatePostDto(
         @NotEmpty(message = "Title cannot be empty")
         String title,
 

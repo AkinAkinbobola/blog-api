@@ -1,14 +1,12 @@
 package dev.akinbobobla.blogapi.controllers;
 
-import dev.akinbobobla.blogapi.dtos.BlogDto;
+import dev.akinbobobla.blogapi.dtos.CreatePostDto;
+import dev.akinbobobla.blogapi.dtos.UpdatePostDto;
 import dev.akinbobobla.blogapi.entities.Blog;
 import dev.akinbobobla.blogapi.services.BlogService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BlogController {
@@ -18,9 +16,14 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @PostMapping("/api/v1/blog")
+    @PostMapping("/api/v1/posts")
     @ResponseStatus(HttpStatus.CREATED)
-    Blog createPost(@Valid @RequestBody BlogDto dto) {
+    Blog createPost(@Valid @RequestBody CreatePostDto dto) {
         return blogService.createPost(dto);
+    }
+
+    @PutMapping("/api/v1/posts/{id}")
+    Blog updatePost(@PathVariable Integer id, @Valid @RequestBody UpdatePostDto dto) {
+        return blogService.updatePost(id, dto);
     }
 }
