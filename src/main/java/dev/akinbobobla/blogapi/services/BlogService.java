@@ -8,6 +8,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class BlogService {
@@ -50,6 +51,18 @@ public class BlogService {
         blog.setUpdatedAt(LocalDateTime.now());
 
         return blogRepository.save(blog);
+    }
+
+    public List<Blog> getAllPosts() {
+        return blogRepository.findAll();
+    }
+
+    public Blog getPostById(Integer id) {
+        return blogRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, Blog.class.getName()));
+    }
+
+    public void deletePost(Integer id) {
+        blogRepository.deleteById(id);
     }
 
 }

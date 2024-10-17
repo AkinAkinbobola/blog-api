@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class BlogController {
     private final BlogService blogService;
@@ -25,5 +27,21 @@ public class BlogController {
     @PutMapping("/api/v1/posts/{id}")
     Blog updatePost(@PathVariable Integer id, @Valid @RequestBody UpdatePostDto dto) {
         return blogService.updatePost(id, dto);
+    }
+
+    @GetMapping("/api/v1/posts")
+    List<Blog> getAllPosts() {
+        return blogService.getAllPosts();
+    }
+
+    @GetMapping("/api/v1/posts/{id}")
+    Blog getPostById(@PathVariable Integer id) {
+        return blogService.getPostById(id);
+    }
+
+    @DeleteMapping("/api/v1/posts/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deletePost(@PathVariable Integer id) {
+        blogService.deletePost(id);
     }
 }
