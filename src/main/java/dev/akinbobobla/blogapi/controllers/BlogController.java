@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/posts")
 public class BlogController {
     private final BlogService blogService;
 
@@ -18,28 +19,28 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @PostMapping("/api/v1/posts")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     Blog createPost(@Valid @RequestBody CreatePostDto dto) {
         return blogService.createPost(dto);
     }
 
-    @PutMapping("/api/v1/posts/{id}")
+    @PutMapping("/{id}")
     Blog updatePost(@PathVariable Integer id, @Valid @RequestBody UpdatePostDto dto) {
         return blogService.updatePost(id, dto);
     }
 
-    @GetMapping("/api/v1/posts")
-    List<Blog> getAllPosts() {
-        return blogService.getAllPosts();
+    @GetMapping
+    List<Blog> getAllPosts(@RequestParam(name = "term", required = false) String term) {
+        return blogService.getAllPosts(term);
     }
 
-    @GetMapping("/api/v1/posts/{id}")
+    @GetMapping("/{id}")
     Blog getPostById(@PathVariable Integer id) {
         return blogService.getPostById(id);
     }
 
-    @DeleteMapping("/api/v1/posts/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deletePost(@PathVariable Integer id) {
         blogService.deletePost(id);

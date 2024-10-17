@@ -53,8 +53,12 @@ public class BlogService {
         return blogRepository.save(blog);
     }
 
-    public List<Blog> getAllPosts() {
-        return blogRepository.findAll();
+    public List<Blog> getAllPosts(String term) {
+        if(term == null || term.isEmpty()) {
+            return blogRepository.findAll();
+        }
+
+        return blogRepository.searchByTerm(term);
     }
 
     public Blog getPostById(Integer id) {
